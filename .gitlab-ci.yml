@@ -1,0 +1,60 @@
+# Selecteert een image van https://hub.docker.com/_/php/
+image: php:latest
+
+# Selecteert wat er gecached moet worden tussen builds in
+cache:
+  paths:
+    - vendor/
+
+before_script:
+  - apt-get update -yqq
+  - apt-get install -yqq git libpq-dev libcurl4-gnutls-dev libicu-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev libonig-dev libzip-dev
+  # Installeert de PHP extensies die nodig zijn
+  - docker-php-ext-install mbstring pdo_pgsql curl intl gd xml zip bz2 opcache
+  # Installeert en configureer xdebug
+  - pecl install xdebug
+  - docker-php-ext-enable xdebug
+  # Installeert composer
+  - curl -sS https://getcomposer.org/installer | php
+  - php composer.phar install
+  # Installeert PHPUnit en maakt de folder uitvoerbaar
+  - |
+    if [ ! -f phpunit-8.phar ]; then
+      curl -LO https://phar.phpunit.de/phpunit-8.phar
+    fi
+    chmod +x phpunit-8.phar
+
+# Pakt services die nodig zijn van https://docs.gitlab.com/ee/ci/services/index.html
+services:
+  - mysql:5.7
+
+# Zet de environment variables die nodig zijn
+variables:
+  # Configureert mysql variabelen (https://hub.docker.com/r/_/mysql/)
+  MYSQL_DATABASE: mysql_database
+  MYSQL_ROOT_PASSWORD: mysql_strong_password
+
+
+# Defineert de stages die we willen gebruiken
+stages:
+  - test
+  - build
+  - deploy
+
+# voert de tests uit
+test:
+   script:
+     - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
+
+# voert de build uit
+build:
+  stage: build
+  script:
+    - echo "Build Iets!"
+
+# voert de deploy uit
+deploy:
+  stage: deploy
+  script: echo "Deploy Iets!
+  environment: production
+  

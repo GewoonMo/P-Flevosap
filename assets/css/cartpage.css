@@ -1,0 +1,34 @@
+  .btn-custom-color {
+    background-color: #23704A; /* Custom color */
+    color: white; /* Text color */
+  }
+
+  .btn-custom-color:hover {
+    background-color: white; /* Custom color */
+    color: #23704A; /* Text color */
+    border-color: #23704A ;
+  }
+
+  .border-btn-custom-color {
+    border-color: #CA201A;
+  }
+
+  .mb-custom{
+    margin-right: 12%;
+  }
+
+
+  .border-custom-hover:hover {
+    border-color: red;
+  }
+
+  .form-control:hover {
+    box-shadow: none;
+    border-color: red;
+}
+
+
+.custom-badge-color {
+  background-color: #CA201A;
+  color: white;
+}

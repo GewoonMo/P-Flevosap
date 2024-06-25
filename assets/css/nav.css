@@ -1,0 +1,36 @@
+/* make it strong */
+.text-custom {
+  font-size: smaller;
+  font-weight: bold;
+}
+
+.my-element {
+  margin-left: 10px;
+}
+
+.navbar-nav .customborder {
+  background-color: red;
+  display: none;
+}
+
+.bg-customcolor {
+  background-color: #FFFFFF;
+}
+
+
+@media (min-width: 768px) {
+.navbar-expand-md {
+  -ms-flex-flow: row nowrap;
+  flex-flow: row nowrap;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+
+}
+.custom-shit {
+text-align: center;
+margin-left: 10%;
+margin-right: 10%;
+}
+
+
+}
